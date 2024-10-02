@@ -1,3 +1,4 @@
+from datetime import datetime
 from settings import *
 import requests
 import pandas as pd
@@ -43,3 +44,23 @@ def scrape_page(links):
         # Occurs when requests cant download the page properly
         except RequestException:
             html.append("")
+    return html
+
+def search(query):
+    columns = ["query", "rank", "link", "title", "snippet", "html", "created"]
+    storage = DBStorage()
+
+    stored_results = storage.query_results(query)
+    if stored_results.shape[0] > 0:
+        stored_results["created"] = pd.to_datetime(stored_results["created"])
+        return stored_results[columns]
+
+    results = search_api(query)
+    results["html"] = scrape_page(results["link"])
+    results = results[results["html"].str.len() > 0].copy()
+
+    results["query"] = query
+    results["created"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+    results = results[columns]
+    results.apply(lambda x: storage.insert_row(x), axis=1)
+
