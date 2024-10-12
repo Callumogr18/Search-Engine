@@ -6,15 +6,53 @@ app = Flask(__name__)
 
 styles = """
 <style>
-    .site {
-        font-size: .8rem;
-        color: green;
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        background-color: #ffffff;
+        color: #333;
+        margin: 0;
+        padding: 20px;
     }
-    
+
+    .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    .result {
+        border-bottom: 1px solid #eaeaea;
+        padding: 10px 0;
+    }
+
+    .site {
+        font-weight: bold;
+        color: #007bff;
+    }
+
     .snippet {
-        font-size: .9rem;
-        color: gray;
-        margin-bottom: 30px;
+        font-size: 0.9rem;
+        color: #666;
     }
 </style>
 """
