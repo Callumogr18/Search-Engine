@@ -26,6 +26,7 @@ def run_search(query):
     results["snippet"] = results["snippet"].apply(lambda x: html.escape(x))
     for index, row in results.iterrows():
         rendered += result_template.format(**row)
+    return rendered
 
 @app.route('/', methods = ['GET', 'POST'])
 def search_form():
