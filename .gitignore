@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # link.db
-.link.db
+link.db
 
 # Distribution / packaging
 .Python
