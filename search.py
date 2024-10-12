@@ -22,14 +22,14 @@ def search_api(query, pages=int((RESULT_COUNT/10))):
 
         results += data["items"]
 
-    # Results will be a list of dictionaries
+    # Results will be a list of dictionaries
     res_df = pd.DataFrame.from_dict(results)
 
-    # 1-11 for the first page of results
+    # 1-11 for the first page of results
     res_df["rank"] = list(range(1, res_df.shape[0]+1))
     res_df = res_df[["link", "rank", "snippet", "title"]]
 
-    # We only need the above specified fields
+    # We only need the above specified fields
     return res_df
 
 # List of links, getting full html from those pages

@@ -24,11 +24,11 @@ class DBStorage():
 
         cur.execute(results_table) # Execute code to create table
         self.con.commit()          # Commit changes 
-        self.con.close()           # Close connection
+        self.con.close()           # Close connection
 
     
     def query_results(self, query):
-        df = pd.read_sql(f"SELECT * FROM results WHERE query='{query}' order by rank asc;", self.con)
+        df = pd.read_sql(f"select * from results where query='{query}' order by rank asc;", self.con)
         return df
     
 
