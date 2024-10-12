@@ -1,9 +1,10 @@
 import sqlite3
 import pandas as pd
 
-class DBStorage():
+class DBStorage:
     def __init__(self):
         self.con = sqlite3.connect("link.db")
+        self.setup_tables()
 
     def setup_tables(self):
         cur = self.con.cursor()
@@ -15,29 +16,29 @@ class DBStorage():
                 link TEXT,
                 title TEXT, 
                 snippet TEXT,
-                HTML,
+                html TEXT,
                 created DATETIME,
-                relevance INTEGER, # Allows us to mark results as relevant or not relevant
+                relevance INTEGER,
                 UNIQUE(query, link)
             );
         """
+        cur.execute(results_table)
+        self.con.commit()
+        cur.close()
 
-        cur.execute(results_table) # Execute code to create table
-        self.con.commit()          # Commit changes 
-        self.con.close()           # Close connection
-
-    
     def query_results(self, query):
-        df = pd.read_sql(f"select * from results where query='{query}' order by rank asc;", self.con)
+        df = pd.read_sql(f"SELECT * FROM results WHERE query=? ORDER BY rank ASC;", self.con, params=(query,))
         return df
-    
 
     def insert_row(self, values):
         cur = self.con.cursor()
         try:
             cur.execute('INSERT INTO results (query, rank, link, title, snippet, html, created) VALUES (?,?,?,?,?,?,?)', values)
             self.con.commit()
-        except sqlite3.IntegrityError: 
+        except sqlite3.IntegrityError:
             pass
+        finally:
+            cur.close()
 
-        cur.close()            
+    def close(self):
+        self.con.close()
