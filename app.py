@@ -4,7 +4,22 @@ import html
 
 app = Flask(__name__)
 
-search_template = """
+styles = """
+<style>
+    .site {
+        font-size: .8rem;
+        color: green;
+    }
+    
+    .snippet {
+        font-size: .9rem;
+        color: gray;
+        margin-bottom: 30px;
+    }
+</style>
+"""
+
+search_template = styles + """
 <form action="/" method="POST">
     <input type="text" name="query">
     <input type="submit" name="Search">    
