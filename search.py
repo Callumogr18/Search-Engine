@@ -64,3 +64,5 @@ def search(query):
     results = results[columns]
     results.apply(lambda x: storage.insert_row(x), axis=1)
 
+    return results
+
